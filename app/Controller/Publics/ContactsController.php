@@ -27,9 +27,6 @@ class ContactsController extends \App\Controller\AppController {
     }
 
     public function view(){
-        $styleCSS = $this->css();
-        $javascript = $this->js();
-
         if(isset($_POST) && array_key_exists('envoyer', $_POST)){
 
             if(App::getInstance()->not_empty(['name', 'email', 'phone', 'objet', 'message'])){

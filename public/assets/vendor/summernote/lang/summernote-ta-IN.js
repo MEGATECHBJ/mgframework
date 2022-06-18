@@ -88,26 +88,4 @@
       },
       color: {
         recent: 'அண்மை நிறம்',
-        more: 'மேலும்',
-        background: 'பின்புல நிறம்',
-        foreground: 'முன்புற நிறம்',
-        transparent: 'தெளிமையான',
-        setTransparent: 'தெளிமையாக்கு',
-        reset: 'மீட்டமைக்க',
-        resetToDefault: 'இயல்புநிலைக்கு மீட்டமை'
-      },
-      shortcut: {
-        shortcuts: 'குறுக்குவழி',
-        close: 'மூடு',
-        textFormatting: 'எழுத்து வடிவமைப்பு',
-        action: 'செயல்படுத்து',
-        paragraphFormatting: 'பத்தி வடிவமைப்பு',
-        documentStyle: 'ஆவண பாணி'
-      },
-      history: {
-        undo: 'மீளமை',
-        redo: 'மீண்டும்'
-      }
-    }
-  });
-})(jQuery);
+        more: 'மேலும்',

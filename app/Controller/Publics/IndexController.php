@@ -2,13 +2,14 @@
 
 namespace App\Controller\Publics;
 
+use App\App;
 use Core\Form\BootstrapForm;
 
 class IndexController extends \App\Controller\AppController {
 
     public function __construct() {
         parent::__construct();
-        //$this->loadModel('Product');
+        $this->loadModel('Admin');
     }
 
     protected function css(){
@@ -23,6 +24,13 @@ class IndexController extends \App\Controller\AppController {
         return $js;
     }
 
+    protected function description($description = null){
+        if(!is_null($description)){
+            return $description;
+        }
+        return App::getInstance()->app_info('app_description');
+    }
+
     public function view(){
         $styleCSS = $this->css();
         $javascript = $this->js();
@@ -35,5 +43,4 @@ class IndexController extends \App\Controller\AppController {
         $this->render('publics.index', compact('styleCSS', 'javascript',
             'page_titre', 'form', 'page', 'description', 'og_picture'));
     }
-
 }
