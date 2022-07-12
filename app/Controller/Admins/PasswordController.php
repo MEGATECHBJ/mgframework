@@ -26,8 +26,6 @@ class PasswordController extends \App\Controller\AppController {
     }
 
     public function view(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $page_titre = 'Changer de mot de passe';
 
         if(isset($_POST) && array_key_exists('edit', $_POST)) {
@@ -66,7 +64,7 @@ class PasswordController extends \App\Controller\AppController {
         }
 
         $form = new BootstrapForm($_POST);
-        $this->render('admins.password', compact('form', 'page_titre', 'styleCSS', 'javascript'));
+        $this->render('admins.password', compact('form', 'page_titre'));
     }
 
 }

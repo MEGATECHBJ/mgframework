@@ -1,5 +1,5 @@
 <div class="row no-gutters">
-    <div class="col-md-4 my-5 p-4 is-bg-white-without text-center offset-md-4">
+    <div class="col-md-4 my-5 p-4 text-center offset-md-4">
         <?php if(isset($erreurs)){
             echo App\App::getInstance()->alerte('danger', $erreurs);
         } ?>

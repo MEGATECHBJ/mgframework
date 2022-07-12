@@ -1,9 +1,8 @@
 <a href="<?= $this->entity()->admins('admin') ?>" class="btn btn-success pull-right">Retour</a>
 <h4 class="is-block-title"><?= $action; ?> un administrateur</h4>
 <hr>
-<div class="row no-margin p-lg shop-zone">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
+<div class="row no-margin">
+    <div class="col-md-6 offset-md-3">
         <form method="post">
             <?= $form->input('username', null, 'Saisissez le nom d\'utilisateur', [
                 'required' => 'required'
@@ -43,5 +42,4 @@
             ]); ?>
         </form>
     </div>
-    <div class="col-sm-3"></div>
 </div>

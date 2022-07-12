@@ -1,6 +1,5 @@
 <div class="row no-gutters">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4 my-5 p-4 is-bg-white-without text-center">
+    <div class="col-md-4 offset-md-4 my-5 p-4 text-center">
         <?php if(isset($erreurs)){
             echo App\App::getInstance()->alerte('danger', $erreurs);
         } ?>
@@ -14,6 +13,5 @@
             <?= $form->button('connexion', 'Se connecter') ?>
         </form>
     </div>
-    <div class="col-sm-4"></div>
 </div>
 

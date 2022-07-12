@@ -1,8 +1,8 @@
 <a href="<?= $this->entity()->admins('admin/create'); ?>" class="btn btn-success pull-right">Ajouter un administrateur</a>
 <h4 class="is-block-title">Liste des administrateurs</h4>
 <hr>
-<div class="row no-gutters p-lg shop-zone">
-    <table id="datatable" class="table table-bordered" cellspacing="0" width="100%">
+<div class="row no-gutters">
+    <table id="datatable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>

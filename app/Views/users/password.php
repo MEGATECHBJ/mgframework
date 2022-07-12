@@ -1,8 +1,7 @@
 <h4 class="is-block-title">Changer de mot de passe</h4>
 <hr>
-<div class="row no-margin">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
+<div class="row no-gutters">
+    <div class="col-md-6 col-md-3">
         <form action="" method="post">
             <?= $form->input('old_password', null, 'Ancien mot de passe', [
                 'required' => 'required',
@@ -21,5 +20,4 @@
             ]) ?>
         </form>
     </div>
-    <div class="col-sm-3"></div>
 </div>

@@ -27,6 +27,7 @@ class ContactsController extends \App\Controller\AppController {
     }
 
     public function view(){
+
         if(isset($_POST) && array_key_exists('envoyer', $_POST)){
 
             if(App::getInstance()->not_empty(['name', 'email', 'phone', 'objet', 'message'])){
@@ -73,7 +74,7 @@ class ContactsController extends \App\Controller\AppController {
         $description = "";
         $og_picture = "";
 
-        $this->render('publics.contacts', compact('styleCSS', 'javascript',
+        $this->render('publics.contacts', compact(
             'page_titre', 'form', 'description', 'og_picture'));
     }
 

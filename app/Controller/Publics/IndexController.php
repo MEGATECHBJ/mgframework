@@ -43,4 +43,5 @@ class IndexController extends \App\Controller\AppController {
         $this->render('publics.index', compact('styleCSS', 'javascript',
             'page_titre', 'form', 'page', 'description', 'og_picture'));
     }
+
 }

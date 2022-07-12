@@ -23,8 +23,6 @@ class LoginController extends \App\Controller\AppController {
     }
 
     public function view() {
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $erreurs = [];
 
         $form = new BootstrapForm($_POST);
@@ -40,7 +38,6 @@ class LoginController extends \App\Controller\AppController {
                 $erreurs[] = 'Identifiant ou mot de passe incorrect.';
             }
         }
-
-        $this->render('admins.login', compact('form', 'page_titre', 'erreurs', 'styleCSS', 'javascript'));
+        $this->render('admins.login', compact('form', 'page_titre', 'erreurs'));
     }
 }

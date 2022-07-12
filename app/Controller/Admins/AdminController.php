@@ -26,14 +26,11 @@ class AdminController extends \App\Controller\AppController {
     }
 
     public function view(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $page_titre = 'Gestion des Utilisateurs';
 
         $admins = $this->Admin->MyAll([], ('username ASC'));
 
-        $this->render('admins.admins', compact('page_titre', 'styleCSS',
-            'javascript', 'admins'));
+        $this->render('admins.admins', compact('page_titre', 'admins'));
 
     }
 

@@ -19,7 +19,8 @@ class Table
     protected $table;
 
     /**
-     * Table constructor. Selectionne la table correspondant à la classe en prenant le nom de la classe sans le Table
+     * Table constructor. Selectionne la table correspondant à la class en
+     * prenant le nom de la class sans la Table
      * de la fin en ajoutant le prefixe af et un s à la fin
      *
      * @param Database $db - Connexion à la base données
@@ -38,6 +39,7 @@ class Table
 
 
     /**
+     * Permet de lancer les requetes SQL
      * @param      $statement  : Requete SQL pour la fonction
      * @param null $attributes : Les attribues s'il s'agit d'une fonction prepare
      * @param bool $one        : Vaut true si on veux recuperer qu'une seule ligne
@@ -45,17 +47,16 @@ class Table
      */
     public function MyQuery ($statement, $attributes = null, $one = false)
     {
-
         if ($attributes) {
             return $this->db->prepare($statement, $attributes, str_replace('Table', 'Entity', get_class($this)), $one);
         } else {
             return $this->db->query($statement, str_replace('Table', 'Entity', get_class($this)), $one);
         }
-
     }
 
 
     /**
+     * Recupere tout au niveau de la base de données
      * @param array  $options : Les options de selection sous forme d'un tableau
      *                        Ex: id => 2 ou username = admins
      * @param string $orderBy : Critère de classement de la selection. Par defaut en fonction de la date
@@ -64,81 +65,45 @@ class Table
      * @return mixed : Retourne un tableau comportant tous les ligne selectionnées. Pour un affichage par
      *                        defaut il ne faut pas mettre des informations dans la parenthèse.
      */
-    public function MyAll ($options = [], $orderBy = 'add_date DESC')
+    public function MyAll ($options = [], $egalites = [], $orderBy = 'add_date DESC')
     {
         $sql_parts = [];
         $attribute = [];
-        if (count($options) > 0) {
-            foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
-                $attribute[] = $v;
-            }
-            $sql_part = implode(' AND ', $sql_parts);
 
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
+        if (count($options) > 0) {
+            $position = 0;
+
+            foreach ($options as $k => $v) {
+                $sql_parts[] = "$k $egalites[$position] ?";
+                $attribute[] = $v;
+                $position++;
+            }
+
+            $sql_part = implode(' AND ', $sql_parts);
 
             return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy", $attribute);
 
-        } else {
+        }
+        else {
             return $this->MyQuery("SELECT * FROM {$this->table} ORDER BY $orderBy");
-        }
-
-    }
-
-
-    /**
-     * @param array  $options : Les options de selection sous forme d'un tableau
-     *                        Ex: id => 2 ou username = admins
-     * @param string $orderBy : Critère de classement de la selection. Par defaut en fonction de la date
-     *                        d'ajout en decroissant. Pour changer il suffit le mettre le champs et de
-     *                        preciser l'ordre. Ex: name ASC
-     * @return array|mixed : Retourne un tableau comportant tous les lignes selectionnées si les
-     *                        parametres de selection sont fournis et un tableau vide si rien n'est
-     *                        fournie.
-     */
-    public function MyLike ($options = [], $orderBy = 'add_date DESC')
-    {
-        $sql_parts = [];
-        $attribute = [];
-        if (count($options) > 0) {
-            foreach ($options as $k => $v) {
-                $sql_parts[] = "$k LIKE ?";
-                $attribute[] = (is_integer($v)) ? $v : '%' . $v . '%';
-            }
-            $sql_part = implode(' OR ', $sql_parts);
-
-            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy", $attribute);
-        } else {
-            return [];
-        }
-    }
-
-
-    /**
-     * @param        $start   : Le numero de la ligne de depart de la limite
-     * @param        $end     : Le nombre de ligne a selectionner
-     * @param array  $options : Les options de selection sous forme d'un tableau
-     *                        Ex: id => 2 ou username = admins
-     * @param string $orderBy : Critère de classement de la selection. Par defaut en fonction de la date
-     *                        d'ajout en decroissant. Pour changer il suffit le mettre le champs et de
-     *                        preciser l'ordre. Ex: name ASC
-     * @return mixed : Retourne un tableau comportant tous les ligne selectionnées. Pour un affichage par
-     *                        defaut il ne faut pas mettre des informations dans la parenthèse.
-     */
-    public function MyLim ($start, $end, $options = [], $orderBy = 'add_date DESC')
-    {
-        $sql_parts = [];
-        $attribute = [];
-        $lim = $start . ', ' . $end;
-        if (count($options) > 0) {
-            foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
-                $attribute[] = $v;
-            }
-            $sql_part = implode(' AND ', $sql_parts);
-
-            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy LIMIT $lim", $attribute);
-        } else {
-            return $this->MyQuery("SELECT * FROM {$this->table} ORDER BY $orderBy LIMIT $lim");
         }
     }
 
@@ -151,30 +116,6 @@ class Table
         return $this->MyQuery("SELECT * FROM {$this->table} WHERE id = ?", [$id], true);
     }
 
-    /**
-     * @param array $options : Les options de selection sous forme d'un tableau
-     *                       Ex: id => 2 ou username = admins
-     * @return array|mixed : Retourne un tableau comportant tous les lignes selectionnées si les
-     *                       parametres de selection sont fournis et un tableau vide si rien n'est
-     *                       fournie.
-     */
-    public function MyWhere ($options = [])
-    {
-        $sql_parts = [];
-        $attribute = [];
-
-        if (count($options) > 0) {
-            foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
-                $attribute[] = $v;
-            }
-            $sql_part = implode(' AND ', $sql_parts);
-            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part", $attribute, true);
-        } else {
-            return [];
-        }
-    }
-
 
     /**
      * function pour faire automatiquement le update dans la base de données
@@ -184,7 +125,7 @@ class Table
      * @param null  $champ
      * @return mixed : Fait le mise a jours d'un champs
      */
-    public function MyUpdate ($id, $options = [], $champ = null)
+    public function MyUpdate ($id, $options = [],  $champ = null)
     {
         $sql_parts = [];
         $attribute = [];
@@ -209,7 +150,7 @@ class Table
      * @param $options
      * @return mixed : Creer un nouveau champs dans la base de données
      */
-    public function MyCreate ($options)
+    public function MyCreate (array $options)
     {
         $sql_parts = [];
         $attribute = [];
@@ -219,6 +160,18 @@ class Table
         }
         $sql_part = implode(', ', $sql_parts);
         return $this->MyQuery("INSERT INTO {$this->table} SET $sql_part", $attribute, true);
+    }
+
+
+    /**
+     * Function qui permet de selection l'ID de l'enrégistrement futur
+     *
+     * @return mixed : Derniere ligne + 1
+     */
+    public function MyNewId ($type = 1)
+    {
+        $q = $this->MyQuery("SELECT MAX(id) AS id FROM {$this->table}", null, true);
+        return $q->id + $type;
     }
 
 
@@ -240,18 +193,6 @@ class Table
 
 
     /**
-     * Function qui permet de selection l'ID de l'enrégistrement futur
-     *
-     * @return mixed : Derniere ligne + 1
-     */
-    public function MyNewId ()
-    {
-        $q = $this->MyQuery("SELECT MAX(id) AS id FROM {$this->table}", null, true);
-        return $q->id + 1;
-    }
-
-
-    /**
      * @param array $options : Les options de selection sous forme d'un tableau
      *                       Ex: id => 2 ou username = admins
      * @param bool  $id      : S'il s'agit d'une mise a jour de ligne il faut preciser l'id de la ligne
@@ -260,7 +201,7 @@ class Table
      *                       base de données, si tous les parametre sont fournis. Et retourne un tableau
      *                       si la variable option n'est pas fournie.
      */
-    public function MyInUse ($options, $id = false)
+    public function MyInUse (array $options, $id = false)
     {
         $sql_parts = [];
         $attribute = [];
@@ -284,13 +225,143 @@ class Table
         return count($query);
     }
 
+
+    /**
+     * @param array  $options : Les options de selection sous forme d'un tableau
+     *                        Ex: id => 2 ou username = admins
+     * @param string $orderBy : Critère de classement de la selection. Par defaut en fonction de la date
+     *                        d'ajout en decroissant. Pour changer il suffit le mettre le champs et de
+     *                        preciser l'ordre. Ex: name ASC
+     * @return array|mixed : Retourne un tableau comportant tous les lignes selectionnées si les
+     *                        parametres de selection sont fournis et un tableau vide si rien n'est
+     *                        fournie.
+     */
+    public function MyLike ($options = [], $orderBy = 'add_date DESC')
+    {
+        $sql_parts = [];
+        $attribute = [];
+
+        if (count($options) > 0) {
+            foreach ($options as $k => $v) {
+                $sql_parts[] = "$k LIKE ?";
+                $attribute[] = (is_integer($v)) ? $v : '%' . $v . '%';
+            }
+            $sql_part = implode(' OR ', $sql_parts);
+
+            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy", $attribute);
+        }
+        else {
+            return [];
+        }
+    }
+
+
+    /**
+     * @param        $start   : Le numero de la ligne de depart de la limite
+     * @param        $end     : Le nombre de ligne a selectionner
+     * @param array  $options : Les options de selection sous forme d'un tableau
+     *                        Ex: id => 2 ou username = admins
+     * @param string $orderBy : Critère de classement de la selection. Par defaut en fonction de la date
+     *                        d'ajout en decroissant. Pour changer il suffit le mettre le champs et de
+     *                        preciser l'ordre. Ex: name ASC
+     * @return mixed : Retourne un tableau comportant tous les ligne selectionnées. Pour un affichage par
+     *                        defaut il ne faut pas mettre des informations dans la parenthèse.
+     */
+    public function MyLim ($start, $end, $options = [], $egalites = [], $orderBy = 'add_date DESC')
+    {
+        $sql_parts = [];
+        $attribute = [];
+        $lim = $start . ', ' . $end;
+
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
+        if (count($options) > 0) {
+            $position = 0;
+
+            foreach ($options as $k => $v) {
+                $sql_parts[] = "$k $egalites[$position] ?";
+                $attribute[] = $v;
+                $position++;
+            }
+            $sql_part = implode(' AND ', $sql_parts);
+
+            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy LIMIT $lim", $attribute);
+        } else {
+            return $this->MyQuery("SELECT * FROM {$this->table} ORDER BY $orderBy LIMIT $lim");
+        }
+    }
+
+
+    /**
+     * @param array $options : Les options de selection sous forme d'un tableau
+     *                       Ex: id => 2 ou username = admins
+     * @return array|mixed : Retourne un tableau comportant tous les lignes selectionnées si les
+     *                       parametres de selection sont fournis et un tableau vide si rien n'est
+     *                       fournie.
+     */
+    public function MyWhere ($options = [], $egalites = [])
+    {
+        $sql_parts = [];
+        $attribute = [];
+
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
+        if (count($options) > 0) {
+            $position = 0;
+
+            foreach ($options as $k => $v) {
+                $sql_parts[] = "$k $egalites[$position] ?";
+                $attribute[] = $v;
+                $position++;
+            }
+
+            $sql_part = implode(' AND ', $sql_parts);
+            return $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part", $attribute, true);
+        } else {
+            return [];
+        }
+    }
+
+
     /**
      * @param array $table :  un tableau contenant les ID des lignes qu'on peu supprimer.
      * @return mixed|null
      */
-    public function MyIn (array $table = [], $orderBy = 'add_date DESC', string $champ = null)
+    public function MyIn (array $values = [], $orderBy = 'add_date DESC', string $champ = null)
     {
-        $ids = array_values($table);
+        $ids = array_values($values);
         if (empty($ids)) {
             return null;
         } else {
@@ -328,7 +399,7 @@ class Table
      *                       Ex: id => 2 ou username = admins
      * @return mixed
      */
-    public function MyCount ($field = null, $options = [])
+    public function MyCount ($field = null, $options = [], $egalites = [])
     {
 
         if (is_null($field)) {
@@ -337,12 +408,35 @@ class Table
 
         $sql_parts = [];
         $attribute = [];
+
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
         if (count($options) > 0) {
 
+            $position = 0;
+
             foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
+                $sql_parts[] = "$k $egalites[$position] ?";
                 $attribute[] = $v;
+                $position++;
             }
+
             $sql_part = implode(' AND ', $sql_parts);
 
             $count = $this->MyQuery("SELECT COUNT($field) as nbre FROM {$this->table} WHERE $sql_part", $attribute);
@@ -354,22 +448,45 @@ class Table
         return $count['0']->nbre;
     }
 
+
     /**
      * @param       $champ
      * @param array $options
      * @return mixed
      */
-    public function MyCountDistinct ($champ, $options = [])
+    public function MyCountDistinct ($champ, $options = [], $egalites = [])
     {
         $sql_parts = [];
         $attribute = [];
 
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
         if (count($options) > 0) {
 
+            $position = 0;
+
             foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
+                $sql_parts[] = "$k $egalites[$position] ?";
                 $attribute[] = $v;
+                $position++;
             }
+
             $sql_part = implode(' AND ', $sql_parts);
 
             return $this->MyQuery("SELECT COUNT (DISTINCT $champ) FROM {$this->table} WHERE $sql_part", $attribute);
@@ -416,13 +533,13 @@ class Table
      * @param array $options
      * @return array
      */
-    public function MyExtract ($key, $value, $options = [], $value2 = null, $find = null)
+    public function MyExtract ($key, $value, $options = [], $egalites = [], $value2 = null, $find = null)
     {
 
         $name = isset($options['name']) ? $options['name'] : false;
         $table = isset($options['table']) ? $options['table'] : false;
 
-        $records = $this->MyAll($options, "$value ASC");
+        $records = $this->MyAll($options, $egalites, "$value ASC");
         $return = [];
         if ($value2) {
             foreach ($records as $v) {
@@ -457,18 +574,39 @@ class Table
      * @param array $options
      * @return mixed
      */
-    public function MyJoin ($table, $champ1, $champ2, $one = false, $options = [])
+    public function MyJoin (string $table, string $champ1, string $champ2, $one = false, $options = [], $egalites = [])
     {
         $table = Config::getInstance()->get('db_prefix') . strtolower($table) . 's';
 
         $sql_parts = [];
         $attribute = [];
 
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
         if (count($options) > 0) {
 
+            $position = 0;
+
             foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
+                $sql_parts[] = "$k $egalites[$position] ?";
                 $attribute[] = $v;
+                $position++;
             }
 
             $sql_part = implode(' AND ', $sql_parts);
@@ -492,17 +630,40 @@ class Table
      *                       Ex: id => 2 ou username = admins
      * @return mixed : Retourne la sommes
      */
-    public function MySum ($sum, $options = [])
+    public function MySum ($sum, $options = [], $egalites = [])
     {
 
         $sql_parts = [];
         $attribute = [];
+
+        if(count($options) > 0 && count($egalites) > 0 && count($options) != count($egalites)){
+            if(count($options) > count($egalites)){
+                for($i=count($egalites);count($egalites) <= count($options); $i++){
+                    $egalites[] = '=';
+                }
+            }
+            elseif(count($options) < count($egalites)){
+                for($i=count($options);count($egalites) <= count($options); $i++){
+                    unset($egalites[$i]);
+                }
+            }
+        }
+        elseif (count($options) > 0 && count($egalites) == 0){
+            for($i=0;$i <= count($options); $i++){
+                $egalites[] = '=';
+            }
+        }
+
         if (count($options) > 0) {
 
+            $position = 0;
+
             foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
+                $sql_parts[] = "$k $egalites[$position] ?";
                 $attribute[] = $v;
+                $position++;
             }
+
             $sql_part = implode(' AND ', $sql_parts);
 
             $count = $this->MyQuery("SELECT SUM($sum) as nbre FROM {$this->table} WHERE $sql_part", $attribute);
@@ -511,35 +672,6 @@ class Table
             $count = $this->MyQuery("SELECT SUM($sum) as nbre FROM {$this->table}");
         }
         return $count['0']->nbre;
-    }
-
-    /**
-     * @param        $options
-     * @param        $id
-     * @param bool   $lim
-     * @param string $orderBy
-     * @return mixed
-     */
-    public function MyOthers ($options, $id, $lim = false, $orderBy = 'add_date DESC')
-    {
-
-        $sql_parts[] = "id != ?";
-        $attribute[] = $id;
-        if ($lim) $lim = "LIMIT $lim";
-
-        if (count($options) > 0) {
-
-            foreach ($options as $k => $v) {
-                $sql_parts[] = "$k = ?";
-                $attribute[] = $v;
-            }
-            $sql_part = implode(' AND ', $sql_parts);
-
-            $datas = $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy $lim", $attribute);
-        } else {
-            $datas = $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ORDER BY $orderBy $lim", $attribute);
-        }
-        return $datas;
     }
 
 }

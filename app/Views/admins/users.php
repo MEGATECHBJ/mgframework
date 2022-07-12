@@ -1,7 +1,7 @@
 <h4 class="is-block-title">Liste des utilisateurs Inscrits</h4>
 <hr>
-<div class="row no-margin p-lg shop-zone">
-    <table id="datatable" class="display table table-bordered" cellspacing="0" width="100%">
+<div class="row no-margin">
+    <table id="datatable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>

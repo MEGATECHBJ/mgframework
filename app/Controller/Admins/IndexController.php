@@ -24,11 +24,9 @@ class IndexController extends \App\Controller\AppController {
     }
 
     public function view(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $page = 'index';
         $page_titre = 'Votre espace d\'administration';
 
-        $this->render('admins.'.$page, compact('page_titre', 'styleCSS', 'javascript'));
+        $this->render('admins.'.$page, compact('page_titre'));
     }
 }

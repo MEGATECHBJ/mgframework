@@ -28,6 +28,11 @@ class captcha
         $this->remoteip = $_SERVER['REMOTE_ADDR'];
     }
 
+    public function verif_captcha ()
+    {
+        return $this->constuct_url()['success'];
+    }
+
     protected function constuct_url ()
     {
         $url = "https://www.google.com/recaptcha/api/siteverify?secret="
@@ -36,11 +41,6 @@ class captcha
             . "&remoteip=" . $this->remoteip;
 
         return json_decode(file_get_contents($url), true);
-    }
-
-    public function verif_captcha ()
-    {
-        return $this->constuct_url()['success'];
     }
 
 

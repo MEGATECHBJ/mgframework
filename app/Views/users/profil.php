@@ -1,6 +1,6 @@
 <h4 class="is-block-title">Vos informations personnelles</h4>
 <hr>
-<div class="row no-margin">
+<div class="row no-gutters">
     <div class="col-md-8">
         <form action="" method="post">
             <?= $form->input('name', null, 'Votre nom complet', [

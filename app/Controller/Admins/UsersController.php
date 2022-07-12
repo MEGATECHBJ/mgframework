@@ -27,20 +27,16 @@ class UsersController extends \App\Controller\AppController {
     }
 
     public function view(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $page_titre = 'Liste des utilisateurs de la plateforme';
+        $form = new BootstrapForm($_POST);
 
         $datas = $this->User->MyJoin('Profil', 'id', 'users_id', false, ['state' => 1]);
 
-        $this->render('admins.users', compact('page_titre', 'styleCSS',
-            'javascript', 'datas', 'form'));
+        $this->render('admins.users', compact('page_titre', 'datas', 'form'));
 
     }
 
     public function create(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
         $action = "Ajouter";
 
         if(isset($_POST) && array_key_exists('create', $_POST)){
@@ -80,16 +76,13 @@ class UsersController extends \App\Controller\AppController {
         $page_titre = 'Créer un utilisateur';
         $form = new BootstrapForm($_POST);
 
-        $this->render('admins.users-form', compact('form', 'page_titre', 'javascript', 'styleCSS', 'action'));
+        $this->render('admins.users-form', compact('form', 'page_titre', 'action'));
 
     }
 
     public function edit($id) {
 
         if(isset($id) && (int)$id !== 0){
-
-            $styleCSS =  $this->css();
-            $javascript = $this->js();
             $action = "Modifier";
 
             if(isset($_POST) && array_key_exists('create', $_POST)){
@@ -132,7 +125,7 @@ class UsersController extends \App\Controller\AppController {
             $form = new BootstrapForm($find);
 
             $this->render('admins.admins-form', compact('form', 'page_titre',
-                'javascript', 'styleCSS', 'action'));
+                'action'));
         }
         else {
             $this->notFound();
@@ -157,9 +150,6 @@ class UsersController extends \App\Controller\AppController {
 
 /*
     public function views(){
-        $styleCSS =  $this->css();
-        $javascript = $this->js();
-
 
         if(isset($_GET['action']) && $_GET['action'] === 'edit'){
 
