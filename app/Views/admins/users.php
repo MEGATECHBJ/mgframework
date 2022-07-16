@@ -13,17 +13,6 @@
             <th></th>
         </tr>
         </thead>
-        <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Nom</th>
-            <th>Téléphone</th>
-            <th>Email</th>
-            <th>Code</th>
-            <th>Date</th>
-            <th></th>
-        </tr>
-        </tfoot>
         <tbody>
         <?php
         $nbre = 0;

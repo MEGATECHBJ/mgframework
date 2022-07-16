@@ -1,10 +1,10 @@
-<script src="<?= $this->entity()->vendor_file('jquery/jquery.min.js'); ?>" async defer></script>
-<script src="<?= $this->entity()->vendor_file('tether/tether.min.js'); ?>" async defer></script>
-<script src="<?= $this->entity()->js_file('popper.min.js'); ?>" async defer></script>
-<script src="<?= $this->entity()->js_file('tooltip.min.js'); ?>" async defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.6/holder.min.js" async defer></script>
-<script src="<?= $this->entity()->vendor_file('bootstrap/bootstrap.min.js'); ?>" async defer></script>
-<script src="<?= $this->entity()->vendor_file('wow/wow.min.js'); ?>" async defer></script>
+<script src="<?= $this->entity()->vendor_file('jquery/jquery.min.js'); ?>"></script>
+<script src="<?= $this->entity()->vendor_file('tether/tether.min.js'); ?>"></script>
+<script src="<?= $this->entity()->js_file('popper.min.js'); ?>"></script>
+<script src="<?= $this->entity()->js_file('tooltip.min.js'); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.6/holder.min.js"></script>
+<script src="<?= $this->entity()->vendor_file('bootstrap/bootstrap.min.js'); ?>"></script>
+<script src="<?= $this->entity()->vendor_file('wow/wow.min.js'); ?>"></script>
 <script async defer>
     new WOW().init();
 </script>

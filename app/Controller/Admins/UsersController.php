@@ -3,50 +3,54 @@
 namespace App\Controller\Admins;
 
 use App\App;
-use \Core\Form\BootstrapForm;
+use App\Controller\AppController;
+use Core\Form\BootstrapForm;
 
-class UsersController extends \App\Controller\AppController {
+class UsersController extends AppController
+{
 
-    public function __construct() {
+    private const URL = 'users';
+
+    public function __construct ()
+    {
         parent::__construct();
 
         $this->loadModel('User');
         $this->loadModel('Profil');
     }
 
-    protected function css(){
-        $css = '<link href="'.$this->entity()->css_file("style-admin.css").'" rel="stylesheet">';
-        $css .= '<link href="'.$this->entity()->vendor_file("dataTables/datatables.min.css").'" rel="stylesheet">';
-        return $css;
-    }
-
-    protected function js(){
-        $js = '<script src="'.$this->entity()->vendor_file("dataTables/datatables.min.js").'"></script>';
-        $js .= '<script src="'.$this->entity()->js_file("my.datatables.js").'"></script>';
-        return $js;
-    }
-
-    public function view(){
+    /**
+     * Default display page for this controller. Is called if no other method is specified.
+     *
+     * @return void
+     */
+    public function view ()
+    {
         $page_titre = 'Liste des utilisateurs de la plateforme';
         $form = new BootstrapForm($_POST);
 
-        $datas = $this->User->MyJoin('Profil', 'id', 'users_id', false, ['state' => 1]);
+        $datas = $this->User->MyJoin('Profil', 'id', 'users_id', false, ['state' => 1, 'del' => 0]);
 
         $this->render('admins.users', compact('page_titre', 'datas', 'form'));
 
     }
 
-    public function create(){
+    /**
+     * Allows to add a new record in the database
+     *
+     * @return void
+     */
+    public function create ()
+    {
         $action = "Ajouter";
 
-        if(isset($_POST) && array_key_exists('create', $_POST)){
+        if (isset($_POST) && array_key_exists('create', $_POST)) {
             extract($this->secureData($_POST));
-
-            if(App::getInstance()->not_empty(['username', 'password', 'email', 'name',
+            if (App::getInstance()->not_empty(['username', 'password', 'email', 'name',
                 'phone', 'userright'])) {
 
-                if($this->Admin->MyInUse(['username' => $username]) < 1
-                    || $this->Admin->MyInUse(['email' => $email]) < 1){
+                if ($this->Admin->MyInUse(['username' => $username]) < 1
+                    || $this->Admin->MyInUse(['email' => $email]) < 1) {
 
                     //Insertion de l'information de la base de données
                     $this->Admin->MyCreate([
@@ -57,18 +61,16 @@ class UsersController extends \App\Controller\AppController {
                         'phone' => $phone,
                         'userright' => $userright
                     ]);
-                    $this->alertDefine('Utilisateur ajouté avec succès','success');
+                    $this->alertDefine('Utilisateur ajouté avec succès', 'success');
 
                     $url = $this->entity()->admins('admin');
                     $this->redirection($url);
-                }
-                else {
+                } else {
                     $this->alertDefine('Un utilisateur existe déjà avec cet 
                     email ce nom d\'utilisateur.', 'danger');
                 }
 
-            }
-            else {
+            } else {
                 $this->alertDefine('Veuillez remplir tous les champs obligatoires', 'danger');
             }
         }
@@ -80,20 +82,27 @@ class UsersController extends \App\Controller\AppController {
 
     }
 
-    public function edit($id) {
+    /**
+     * Updating information in database
+     *
+     * @param $id : ID of the line to be modified
+     * @return void
+     */
+    public function edit ($id)
+    {
 
-        if(isset($id) && (int)$id !== 0){
+        if (isset($id) && (int)$id !== 0) {
             $action = "Modifier";
 
-            if(isset($_POST) && array_key_exists('create', $_POST)){
+            if (isset($_POST) && array_key_exists('create', $_POST)) {
                 extract($this->secureData($_POST));
 
                 $id = htmlspecialchars($id);
 
-                if(App::getInstance()->not_empty(['username', 'password', 'email', 'name', 'phone', 'userright'])) {
+                if (App::getInstance()->not_empty(['username', 'password', 'email', 'name', 'phone', 'userright'])) {
 
-                    if($this->Admin->MyInUse(['username' => $username], $id) < 1
-                        || $this->Admin->MyInUse(['email' => $email], $id) < 1){
+                    if ($this->Admin->MyInUse(['username' => $username], $id) < 1
+                        || $this->Admin->MyInUse(['email' => $email], $id) < 1) {
 
                         $this->Admin->MyUpdate($id, [
                             'username' => $username,
@@ -107,14 +116,12 @@ class UsersController extends \App\Controller\AppController {
 
                         $url = $this->entity()->admins('admin');
                         $this->redirection($url);
-                    }
-                    else {
+                    } else {
                         $this->alertDefine('Un administrateur existe déjà avec 
                             cet email ou ce nom d\'utilisateur.', 'danger');
                     }
 
-                }
-                else {
+                } else {
                     $this->alertDefine('Veuillez remplir tous les champs 
                         obligatoires', 'danger');
                 }
@@ -126,93 +133,63 @@ class UsersController extends \App\Controller\AppController {
 
             $this->render('admins.admins-form', compact('form', 'page_titre',
                 'action'));
-        }
-        else {
+        } else {
             $this->notFound();
         }
 
     }
 
-    public function delete($id) {
+    /**
+     * Delete information from the database
+     *
+     * @param $id : ID of the row to delete
+     * @return void
+     */
+    public function delete ($id)
+    {
 
-        if(isset($id) && (int)$id !== 0){
+        if (isset($id) && (int)$id !== 0) {
 
-            $this->User->MyDelete($id);
+            $this->User->MyUpdate($id, ['del' => 1]);
             $this->Profil->MyDelete($id, 'users_id');
 
-            $url = $this->entity()->admins('users');
-            $this->redirection($url);
-        }
-        else {
+            $this->redirection($this->url());
+        } else {
             $this->notFound();
         }
     }
 
-/*
-    public function views(){
-
-        if(isset($_GET['action']) && $_GET['action'] === 'edit'){
-
-            if(isset($_GET['id']) && (int)$_GET['id'] !== 0){
-                extract($this->secureData($_POST));
-
-                $id = htmlspecialchars($_GET['id']);
-
-                $users = $this->User->MyFind($id);
-
-                if($users){
-                    if($users->state == 1){
-
-                        $this->User->MyUpdate($id, [
-                            'state' => 0,
-                        ]);
-
-                        $this->alertDefine('Compte désactivée', 'success');
-                        $content = '<h4>Désolé</h4>';
-                        $content .= '<p>Votre compte sur <strong>' . App::getInstance()->app_info("app_name") . '</strong>';
-                        $content .= 'a été desactivé par l\'administrateur du site. 
-                                        Pour connaitre les raisons de cette action veuillez 
-                                        contacter l\'administrateur à travers le formulaire 
-                                        de contact présent sur le site MDE.</p>';
-
-                        $objet = 'Désactivation de votre compte';
-
-                    }
-                    else {
-                        $this->User->MyUpdate($id, [
-                            'state' => 1,
-                        ]);
-                        $this->alertDefine('Compte Activée', 'success');
-
-                        $content = '<h4>Désolé</h4>';
-                        $content .= '<p>Votre compte sur <strong>' . App::getInstance()->app_info("app_name") . '</strong>';
-                        $content .= 'a été desactivé par l\'administrateur du site. 
-                                        Vous pouvez à présent vous connecter pour 
-                                        configurer votre boutique et commencer par vendre.</p>';
-
-                        $objet = 'Désactivation de votre compte';
-                    }
-
-                    $to = $users->state;
-
-                    $emailClass = new Email();
-                    $emailClass->sendEmail($content, $to, $objet, null, null);
-                }
-                else {
-                    $this->notFound();
-                }
-
-                $url = App::getInstance()->app_info("app_url") . '/admins/users';
-                $this->redirection($url);
-            }
-            else {
-                $this->notFound();
-            }
-
-        }
-
-
+    /**
+     * Define default page URL
+     *
+     * @return string
+     */
+    private function url (): string
+    {
+        return $this->entity()->admins(self::URL);
     }
 
-*/
+    /**
+     * Contains CSS links of all pages dependent on this controller
+     *
+     * @return string
+     */
+    protected function css ()
+    {
+        $css = '<link href="' . $this->entity()->css_file("style-admin.css") . '" rel="stylesheet">';
+        $css .= '<link href="' . $this->entity()->vendor_file("dataTables/datatables.min.css") . '" rel="stylesheet">';
+        return $css;
+    }
+
+    /**
+     * Contains JS links of all pages dependent on this controller
+     *
+     * @return string
+     */
+    protected function js ()
+    {
+        $js = '<script src="' . $this->entity()->vendor_file("dataTables/datatables.min.js") . '"></script>';
+        $js .= '<script src="' . $this->entity()->js_file("my.datatables.js") . '"></script>';
+        return $js;
+    }
 }

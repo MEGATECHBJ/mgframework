@@ -1,4 +1,4 @@
-<a href="<?= $this->entity()->admins('admin') ?>" class="btn btn-success pull-right">Retour</a>
+<a href="<?= $this->entity()->admins('admins') ?>" class="btn btn-success pull-right">Retour</a>
 <h4 class="is-block-title"><?= $action; ?> un administrateur</h4>
 <hr>
 <div class="row no-margin">
@@ -24,7 +24,7 @@
 
             <?= $form->input('phone', null, 'Saisissez le numero de téléphone de l\'utilisateur', [
                 'required' => 'required',
-                'data-mask' => '(+999)99999999'
+                'data-mask' => '+99999999999'
             ]); ?>
 
             <?= $form->select('userright', null, 'Sélectionner un type d\'administrateur', [

@@ -1,4 +1,4 @@
-<a href="<?= $this->entity()->admins('admin/create'); ?>" class="btn btn-success pull-right">Ajouter un administrateur</a>
+<a href="<?= $this->entity()->admins('admins/create'); ?>" class="btn btn-success pull-right">Ajouter un administrateur</a>
 <h4 class="is-block-title">Liste des administrateurs</h4>
 <hr>
 <div class="row no-gutters">
@@ -14,17 +14,6 @@
             <th></th>
         </tr>
         </thead>
-        <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Nom d'utilisateur</th>
-            <th>Email</th>
-            <th>Nom</th>
-            <th>Téléphone</th>
-            <th>Droits</th>
-            <th></th>
-        </tr>
-        </tfoot>
         <tbody>
         <?php
         $nbre = 0;
@@ -46,15 +35,16 @@
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a href="<?= $this->entity()->admins('admin/edit/'.$data->id) ?>"
-                           class="btn btn-secondary btn-sm" title="modifier"><i class="fas fa-edit"></i>
+                        <a href="<?= $this->entity()->admins('admins/'.$data->id.'/edit') ?>"
+                           class="btn btn-secondary btn-sm" title="modifier"><i class="bx bx-pencil"></i>
                         </a>
-                        <a href="<?= $this->entity()->admins('admin/delete/'.$data->id) ?>"
-                           class="btn btn-danger btn-sm" title="supprimer"><i class="fas fa-trash"></i>
+                        <a href="#" data-toggle="modal" data-target="#delete<?= $data->id ?>"
+                           class="btn btn-danger btn-sm" title="supprimer"><i class="bx bx-trash"></i>
                         </a>
                     </div>
                 </td>
             </tr>
+            <?= $this->entity()->confirm($data->id, $url, 'delete', 'Voulez-vous vraiment supprimez cette ligne ?') ?>
         <?php endforeach; ?>
         </tbody>
     </table>

@@ -2,16 +2,18 @@
 
 namespace App\Controller\Admins;
 
+use App\Controller\AppController;
 
-class SignoutController extends \App\Controller\AppController {
+class SignoutController extends AppController
+{
 
-    public function __construct() {
+    public function __construct ()
+    {
         parent::__construct();
-
-        $this->loadModel('Admin');
     }
 
-    public function view(){
+    public function view ()
+    {
         $this->sign_out('a');
     }
 

@@ -1,4 +1,5 @@
 .idea
+.github
 caches
 layouts/email
 /public/uploads

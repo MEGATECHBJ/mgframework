@@ -24,7 +24,7 @@ class GlobalEntity extends Entity
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body text-center">
-                        <form action="'.$url.'" method="post">
+                        <form action="'.$url.'/'.$id.'/'.$action.'" method="post">
                             <p> '.$message.'</p>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
                             <button type="submit" class="btn btn-success">Oui</button>
