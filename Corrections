@@ -1,0 +1,22 @@
+13/08/2020
+=====================
+1. Add in config.php the default language param. The name of param is "app_default_lang"
+2. Edit the line 88 in src/i18n/i18n.php
+    Older line : $this->session = 'fr';
+    New line : $this->session = Config::getInstance()->get('app_default_lang');
+
+11/11/2020
+======================
+1. Delete core folder.
+2. Change nav_actif to is_current in the all fils
+
+27/05/2021
+================
+Optimisation de l'upload de fichier. Suppression de blanc autour de l'image lors du
+redimensionnement d'une image plus pétite que la taille de redimentionnement.
+-- Fichier Upload - Ligne 665
+
+
+12/06/2021
+===============
+Optimisation du chargement de la page. Ajout de la propriété  "async defer" a toutes le balises <script>

@@ -1,0 +1,8 @@
+.idea
+.github
+caches
+layouts/email
+/public/uploads
+/config/config.php
+sources
+vendor

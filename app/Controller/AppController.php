@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Controller;
+
+use App\App;
+use \Src\Auth\DBAuth;
+use Globals\GlobalController;
+use Globals\GlobalEntity;
+
+class AppController extends GlobalController {
+
+    protected $template = 'default';
+
+    public function __construct(string $type = 'default') {
+        if($type === 'blog'){
+            $this->viewPath = ROOT . '/modules/Blogs/Views/';
+        }
+        else {
+            $this->viewPath = ROOT . '/app/Views/';
+        }
+    }
+
+    protected function loadModel($modal_name){
+        $this->$modal_name = App::getInstance()->getTable($modal_name);
+    }
+
+    public function Auth(){
+        $auth = new DBAuth(App::getInstance()->getDb());
+        return $auth;
+    }
+
+    public function entity() {
+        $entity = new GlobalEntity();
+        return $entity;
+    }
+
+}

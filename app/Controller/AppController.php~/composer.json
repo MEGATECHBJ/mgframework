@@ -1,0 +1,13 @@
+{
+    "name": "megatech/mailchimp",
+    "authors": [
+        {
+            "name": "eidaconsulting",
+            "email": "azziz.bello@gmail.com"
+        }
+    ],
+    "require": {
+        "mailchimp/transactional": "^1.0",
+        "phpmailer/phpmailer": "^6.5"
+    }
+}
