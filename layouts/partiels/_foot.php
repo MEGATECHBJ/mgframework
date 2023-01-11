@@ -1,10 +1,10 @@
-<script defer src="<?= $this->entity()->vendor_file('jquery/jquery.min.js'); ?>"></script>
-<script defer src="<?= $this->entity()->vendor_file('tether/tether.min.js'); ?>"></script>
-<script defer src="<?= $this->entity()->js_file('popper.min.js'); ?>"></script>
-<script defer src="<?= $this->entity()->js_file('tooltip.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("vendor",'jquery/jquery.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("vendor",'tether/tether.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("js",'popper.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("js",'tooltip.min.js'); ?>"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.6/holder.min.js"></script>
-<script defer src="<?= $this->entity()->vendor_file('bootstrap/bootstrap.min.js'); ?>"></script>
-<script defer src="<?= $this->entity()->vendor_file('wow/wow.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("vendor",'bootstrap/bootstrap.min.js'); ?>"></script>
+<script defer src="<?= $this->entity()->get_file("vendor",'wow/wow.min.js'); ?>"></script>
 <script defer>
     new WOW().init();
 </script>
@@ -33,7 +33,7 @@
     })(window,document,'script','dataLayer','GTM-PBHHSCZ');</script>
 <!-- End Google Tag Manager -->
 
-<script src="<?= $this->entity()->js_file('script.js'); ?>" defer></script>
+<script src="<?= $this->entity()->get_file("js",'script.js'); ?>" defer></script>
 </body>
 </html>
 

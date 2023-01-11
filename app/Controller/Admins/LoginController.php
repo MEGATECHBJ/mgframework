@@ -40,7 +40,7 @@ class LoginController extends AppController
      */
     protected function css (): string
     {
-        $css = '<link href="' . $this->entity()->css_file("style-admin.css") . '" rel="stylesheet">';
+        $css = '<link href="' . $this->entity()->get_file("css","style-admin.css") . '" rel="stylesheet">';
         return $css;
     }
 

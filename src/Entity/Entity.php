@@ -155,22 +155,6 @@ class Entity
         return $image;
     }
 
-    /**
-     * @param $file
-     * @return string
-     */
-    public function img_file ($file)
-    {
-        return $this->url() . '/assets/img/' . $file;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function url ()
-    {
-        return Config::getInstance()->get('app_url');
-    }
 
     /**
      * Fonction d'affichage des images dans le viewers
@@ -243,6 +227,23 @@ class Entity
     }
 
     /**
+     * @param $file
+     * @return string
+     */
+    public function img_file ($file)
+    {
+        return $this->url() . '/assets/img/' . $file;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function url ()
+    {
+        return Config::getInstance()->get('app_url');
+    }
+
+    /**
      * @param $url
      * @return string
      */
@@ -297,9 +298,9 @@ class Entity
     public function blogs ($page = null)
     {
         if ($page == null) {
-            return Config::getInstance()->get('app_url') . '/blogs';
+            return Config::getInstance()->get('app_url') . '/blog';
         } else {
-            return Config::getInstance()->get('app_url') . '/blogs/' . $page;
+            return Config::getInstance()->get('app_url') . '/blog/' . $page;
         }
 
     }
@@ -314,49 +315,81 @@ class Entity
     }
 
     /**
-     * @param string $file
-     * @return string
+     * To get file from public assets folder
+     * @param string $folder The folder ou file type (ei. css, js, ajax, vendor)
+     * @param string $file The file name
+     * @return string Return the file complete url (ei. https://sitename.dev/assets/css/style.css
      */
-    public function css_file (string $file): string
+    public function get_file (string $folder, string $file): string
     {
-        return $this->url() . '/assets/css/' . $file;
+        return $this->url() . '/assets/'. $folder .'/' . $file;
     }
 
     /**
-     * @param string $file
-     * @return string
+     * Function qui permet de gerer l'affichages des alertes
      */
-    public function js_file (string $file): string
+    public function notification ()
     {
-        return $this->url() . '/assets/js/' . $file;
+        if (isset($_SESSION['notification']['message'])): ?>
+            <div id="alert" class="is-alerte-message alert alert-<?= $_SESSION['notification']['type'] ?>">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php if ($_SESSION['notification']['type'] == 'success'): ?>
+                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-check.svg') ?>" width="20" alt=""> &nbsp; <strong>Succès !</strong></div>
+                <?php elseif ($_SESSION['notification']['type'] == 'danger'): ?>
+                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-x.svg') ?>" width="20" alt=""> &nbsp; <strong>Erreur !</strong></div>
+                <?php elseif ($_SESSION['notification']['type'] == 'info'): ?>
+                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
+                    </div>
+                <?php elseif ($_SESSION['notification']['type'] == 'warning'): ?>
+                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-alarm-exclamation.svg') ?>" width="20" alt=""> &nbsp; <strong>Attention
+                            !</strong></div>
+                <?php else: ?>
+                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
+                    </div>
+                <?php endif; ?>
+                <?php if (is_array($_SESSION['notification']['message'])): ?>
+                    <ul>
+                        <?php foreach ($_SESSION['notification']['message'] as $message): ?>
+                            <li><?= $message; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <span><?= $_SESSION['notification']['message'] ?></span>
+                <?php endif; ?>
+            </div>
+            <?php $_SESSION['notification'] = []; ?>
+        <?php endif;
     }
 
-    /**
-     * @param string $file
-     * @return string
-     */
-    public function ajax_file (string $file): string
-    {
-        return $this->url() . '/assets/ajax/' . $file;
-    }
 
     /**
-     * @param string $file
+     * Return active class if is current nav item
+     *
+     * @param $param
      * @return string
      */
-    public function vendor_file (string $file): string
+    public function is_current (string $param,bool $single = false): string
     {
-        return $this->url() . '/assets/vendor/' . $file;
+        if(isset($single, $_GET['url']) && $single == true){
+            $array = explode('/', $_GET['url']);
+            if ($array[0] == $param) {
+                return 'active';
+            }
+            else {
+                return '';
+            }
+        }
+        else {
+            if (isset($_GET['url']) && $_GET['url'] == $param) {
+                return 'active';
+            }
+            else {
+                return '';
+            }
+        }
+
     }
 
-    /**
-     * @param string $file
-     * @return string
-     */
-    public function font_file (string $file): string
-    {
-        return $this->url() . '/assets/fonts/' . $file;
-    }
 
     /**
      * Fonction qui permet de générer un menu automatiquemement
@@ -417,34 +450,6 @@ class Entity
     }
 
     /**
-     * Return active class if is current nav item
-     *
-     * @param $param
-     * @return string
-     */
-    public function is_current (string $param,bool $single = false): string
-    {
-        if(isset($single, $_GET['url']) && $single == true){
-            $array = explode('/', $_GET['url']);
-            if ($array[0] == $param) {
-                return 'active';
-            }
-            else {
-                return '';
-            }
-        }
-        else {
-            if (isset($_GET['url']) && $_GET['url'] == $param) {
-                return 'active';
-            }
-            else {
-                return '';
-            }
-        }
-
-    }
-
-    /**
      * @param $table
      * @param $id
      * @return mixed
@@ -475,41 +480,6 @@ class Entity
         return App::getInstance()->getTable($table)->MyCount($field, $options);
     }
 
-    /**
-     * Function qui permet de gerer l'affichages des alertes
-     */
-    public function notification ()
-    {
-        if (isset($_SESSION['notification']['message'])): ?>
-            <div id="alert" class="is-alerte-message alert alert-<?= $_SESSION['notification']['type'] ?>">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php if ($_SESSION['notification']['type'] == 'success'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-check.svg') ?>" width="20" alt=""> &nbsp; <strong>Succès !</strong></div>
-                <?php elseif ($_SESSION['notification']['type'] == 'danger'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-x.svg') ?>" width="20" alt=""> &nbsp; <strong>Erreur !</strong></div>
-                <?php elseif ($_SESSION['notification']['type'] == 'info'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
-                    </div>
-                <?php elseif ($_SESSION['notification']['type'] == 'warning'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-alarm-exclamation.svg') ?>" width="20" alt=""> &nbsp; <strong>Attention
-                            !</strong></div>
-                <?php else: ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
-                    </div>
-                <?php endif; ?>
-                <?php if (is_array($_SESSION['notification']['message'])): ?>
-                    <ul>
-                        <?php foreach ($_SESSION['notification']['message'] as $message): ?>
-                            <li><?= $message; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <span><?= $_SESSION['notification']['message'] ?></span>
-                <?php endif; ?>
-            </div>
-            <?php $_SESSION['notification'] = []; ?>
-        <?php endif;
-    }
 
 
     /**
@@ -549,9 +519,10 @@ class Entity
     }
 
     /**
-     * @param $texte    Contenu à decodé
-     * @return string   Return the decode text
+     * @param $texte Contenu à decodé
+     * @return string Return the decode text
      */
+
     public function decodeTexte ($texte)
     {
         return htmlspecialchars_decode($texte, ENT_HTML5);

@@ -72,11 +72,11 @@ setlocale(LC_ALL, 'fra');
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Dosis:400,700|Open+Sans:400,400i,700,700i|Poppins:400,400i,700,700i|Quintessential|Roboto:400,400i,700,700i" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript> <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis:400,700|Open+Sans:400,400i,700,700i|Poppins:400,400i,700,700i|Quintessential|Roboto:400,400i,700,700i"> </noscript>
 
-    <link rel="preload" href="<?= $this->entity()->vendor_file('animate/animate.css'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript> <link rel="stylesheet" href="<?= $this->entity()->vendor_file('animate/animate.css'); ?>"> </noscript>
+    <link rel="preload" href="<?= $this->entity()->get_file("vendor",'animate/animate.css'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript> <link rel="stylesheet" href="<?= $this->entity()->get_file("vendor",'animate/animate.css'); ?>"> </noscript>
 
-    <link rel="stylesheet" href="<?= $this->entity()->vendor_file('bootstrap/bootstrap.min.css'); ?>">
-    <link rel="stylesheet" href="<?= $this->entity()->css_file('style.css'); ?>">
+    <link rel="stylesheet" href="<?= $this->entity()->get_file("vendor",'bootstrap/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?= $this->entity()->get_file("css",'style.css'); ?>">
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 

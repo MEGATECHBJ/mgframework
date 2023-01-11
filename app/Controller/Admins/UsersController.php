@@ -176,8 +176,8 @@ class UsersController extends AppController
      */
     protected function css ()
     {
-        $css = '<link href="' . $this->entity()->css_file("style-admin.css") . '" rel="stylesheet">';
-        $css .= '<link href="' . $this->entity()->vendor_file("dataTables/datatables.min.css") . '" rel="stylesheet">';
+        $css = '<link href="' . $this->entity()->get_file("css","style-admin.css") . '" rel="stylesheet">';
+        $css .= '<link href="' . $this->entity()->get_file("vendor","dataTables/datatables.min.css") . '" rel="stylesheet">';
         return $css;
     }
 
@@ -188,8 +188,8 @@ class UsersController extends AppController
      */
     protected function js ()
     {
-        $js = '<script src="' . $this->entity()->vendor_file("dataTables/datatables.min.js") . '"></script>';
-        $js .= '<script src="' . $this->entity()->js_file("my.datatables.js") . '"></script>';
+        $js = '<script src="' . $this->entity()->get_file("vendor","dataTables/datatables.min.js") . '"></script>';
+        $js .= '<script src="' . $this->entity()->get_file("js","my.datatables.js") . '"></script>';
         return $js;
     }
 }
