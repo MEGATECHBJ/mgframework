@@ -5,7 +5,7 @@
         } ?>
         <form method="post" action="">
             <div class="sign-avatar">
-                <img src="<?= $this->entity()->img_file('logo-icone.png'); ?>" width="75"
+                <img src="<?= $this->entity()->get_file("vendor",'logo-icone.png'); ?>" width="75"
                      alt="<?= App\App::getInstance()->app_info('app_name'); ?>">
             </div>
             <p class="sign-title">Administration <?= App\App::getInstance()->app_info('app_name'); ?></p>

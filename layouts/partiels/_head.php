@@ -34,13 +34,13 @@ setlocale(LC_ALL, 'fra');
     <!-- Google / Search Engine Tags-->
     <meta itemprop="name" content="<?= $this->entity()->app_info('app_name'); ?>">
     <meta itemprop="description" content="<?php if (isset($description) && $description != "") { echo $description;} else { echo $this->entity()->app_info('app_description') ; } ?>">
-    <meta itemprop="image" content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->img_file('logo.png'); } ?>">
+    <meta itemprop="image" content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->get_file("vendor",'logo.png'); } ?>">
 
     <!-- Twitter Meta Tags-->
     <meta name="twitter:card"          content="summary_large_image">
     <meta name="twitter:title"         content="<?php if (isset($page_titre) && $page_titre != "") { echo $page_titre;} else { echo $this->entity()->app_info('app_slogan') ; } ?>">
     <meta name="twitter:description"   content="<?php if (isset($description) && $description != "") { echo $description;} else { echo $this->entity()->app_info('app_description') ; } ?>">
-    <meta name="twitter:image"         content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->img_file('logo.png'); } ?>">
+    <meta name="twitter:image"         content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->get_file("vendor",'logo.png'); } ?>">
     <meta name="twitter:url"           content="<?= $this->entity()->url().$_SERVER['REQUEST_URI']; ?>">
     <meta name="twitter:site"          content="@eidaconsulting" />
     <meta name="twitter:creator"       content="@eidaconsulting" />
@@ -51,13 +51,13 @@ setlocale(LC_ALL, 'fra');
     <meta property="og:type"           content="<?php if (isset($og_type) && $og_type != "") { echo $og_type;} else { echo 'website'; } ?>" />
     <meta property="og:title"          content="<?php if (isset($page_titre) && $page_titre != "") { echo $page_titre;} else { echo $this->entity()->app_info('app_slogan') ; } ?>" />
     <meta property="og:description"    content="<?php if (isset($description) && $description != "") { echo $description;} else { echo $this->entity()->app_info('app_description') ; } ?>" />
-    <meta property="og:image"          content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->img_file('logo.png'); } ?>" />
+    <meta property="og:image"          content="<?php if (isset($og_picture) && $og_picture != "") { echo $og_picture;} else { echo $this->entity()->get_file("vendor",'logo.png'); } ?>" />
 
     <title><?php if (isset($page_titre) && $page_titre != "") { echo $page_titre;} else { echo $this->entity()->app_info('app_slogan') ; } ?> :: <?= $this->entity()->app_info('app_name'); ?></title>
 
     <!-- Favicons -->
-    <link href="<?= $this->entity()->img_file('favicon.png'); ?>" rel="icon" type="image/png">
-    <link href="<?= $this->entity()->img_file('favicon.ico'); ?>" rel="shortcut icon">
+    <link href="<?= $this->entity()->get_file("vendor",'favicon.png'); ?>" rel="icon" type="image/png">
+    <link href="<?= $this->entity()->get_file("vendor",'favicon.ico'); ?>" rel="shortcut icon">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

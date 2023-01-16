@@ -37,11 +37,11 @@
                     <div class="btn-group">
                         <a href="<?= $this->entity()->admins('admins/'.$data->id.'/edit') ?>"
                            class="btn btn-secondary btn-sm" title="modifier">
-                            <img src="<?= $this->entity()->img_file('icons/bx-pencil.svg') ?>" width="15" class="is-light" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bx-pencil.svg') ?>" width="15" class="is-light" alt="">
                         </a>
                         <a href="#" data-toggle="modal" data-target="#delete<?= $data->id ?>"
                            class="btn btn-danger btn-sm" title="supprimer">
-                            <img src="<?= $this->entity()->img_file('icons/bx-trash.svg') ?>" width="15" class="is-light" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bx-trash.svg') ?>" width="15" class="is-light" alt="">
                         </a>
                     </div>
                 </td>

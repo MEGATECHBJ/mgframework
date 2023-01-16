@@ -28,10 +28,10 @@ class Entity
 
 
     /**
-     * It Display money depending on the currency
-     * @param int $money : The money you want to display
-     * @param string $currency : The currency ($, dollar, € or euro)
-     * @return string : return the money converted according to the
+     * It Displays money depending on the currency
+     * @param int $money The money you want to display
+     * @param string $currency The currency ($, dollar, € or euro)
+     * @return string return the money converted according to the
      *                  currency with the correct format
      */
     public function getCurrency (int $money, string $currency = ''): string
@@ -49,21 +49,21 @@ class Entity
 
     /**
      * To get any information in the config file
-     * @param $info : is the array key in the config file
+     * @param string $info is the array key in the config file
      * @return mixed|null
      */
-    public function app_info ($info)
+    public function app_info (string $info)
     {
         return Config::getInstance()->get($info);
     }
 
     /**
      * Allows to retrieve an extract from a text
-     * @param $length  : the number of characters we want to display in the text.
-     * @param $mark    : the mark to put at the end of the text to signify that
+     * @param int $length the number of characters we want to display in the text.
+     * @param string $mark the mark to put at the end of the text to signify that
      *                 it continues and that it is part of an even longer text
-     * @param $content : the text of which we want to display a part
-     * @return string : Return the shortened text
+     * @param string $content the text of which we want to display a part
+     * @return string Return the shortened text
      */
     public function getExtract (int $length, string $mark, string $content): string
     {
@@ -133,18 +133,20 @@ class Entity
     }
 
     /**
-     * @param      $picture
-     * @param      $taille
-     * @param bool $directory
+     * @param string $picture
+     * @param int $H_taille
+     * @param int $W_taille
+     * @param string $directory
+     * @param string $class
+     * @return null
      */
-    public function miniature ($picture, $H_taille, $W_taille, $directory = false, $class = 'img-responsive')
+    public function miniature (string $picture, int $H_taille, int $W_taille, string $directory = '', string $class = 'img-responsive')
     {
-
         if ($picture == '' || $picture == null) {
-            $picture_url = $this->img_file('default.png');
+            $picture_url = $this->get_file("img", 'default.png');
             $image = $this->pictureScreen($picture_url, $H_taille, $W_taille, $class);
         } else {
-            if ($directory) {
+            if ($directory != '') {
                 $picture_url = $this->uploads($directory) . '/' . $picture;
             } else {
                 $picture_url = $this->uploads('uploads') . '/' . $picture;
@@ -160,11 +162,12 @@ class Entity
      * Fonction d'affichage des images dans le viewers
      * Affiche :  src="..." width="..." height="..." pour la balise img
      *
-     * @param $img_Src : URL (chemin + NOM) de l'image Source
-     * @param $W_max   : La largeur maximale
-     * @param $H_max   : La hauteur maximale
+     * @param int $img_Src URL (chemin + NOM) de l'image Source
+     * @param int $W_max La largeur maximale
+     * @param int $H_max La hauteur maximale
+     * @param string $class
      */
-    public function pictureScreen ($img_Src, $W_max, $H_max, $class)
+    public function pictureScreen (int $img_Src, int $W_max, int $H_max, string $class)
     {
         $handle = @fopen($img_Src, "r");
         if ($handle) {
@@ -224,15 +227,6 @@ class Entity
             $W = 0;
             $H = 0;
         }
-    }
-
-    /**
-     * @param $file
-     * @return string
-     */
-    public function img_file ($file)
-    {
-        return $this->url() . '/assets/img/' . $file;
     }
 
     /**
@@ -334,17 +328,17 @@ class Entity
             <div id="alert" class="is-alerte-message alert alert-<?= $_SESSION['notification']['type'] ?>">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <?php if ($_SESSION['notification']['type'] == 'success'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-check.svg') ?>" width="20" alt=""> &nbsp; <strong>Succès !</strong></div>
+                    <div class="alert-icone"><img src="<?= $this->get_file("img", 'icons/bx-check.svg') ?>" width="20" alt=""> &nbsp; <strong>Succès !</strong></div>
                 <?php elseif ($_SESSION['notification']['type'] == 'danger'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-x.svg') ?>" width="20" alt=""> &nbsp; <strong>Erreur !</strong></div>
+                    <div class="alert-icone"><img src="<?= $this->get_file("img", 'icons/bx-x.svg') ?>" width="20" alt=""> &nbsp; <strong>Erreur !</strong></div>
                 <?php elseif ($_SESSION['notification']['type'] == 'info'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
+                    <div class="alert-icone"><img src="<?= $this->get_file("img", 'icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
                     </div>
                 <?php elseif ($_SESSION['notification']['type'] == 'warning'): ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-alarm-exclamation.svg') ?>" width="20" alt=""> &nbsp; <strong>Attention
+                    <div class="alert-icone"><img src="<?= $this->get_file("img", 'icons/bx-alarm-exclamation.svg') ?>" width="20" alt=""> &nbsp; <strong>Attention
                             !</strong></div>
                 <?php else: ?>
-                    <div class="alert-icone"><img src="<?= $this->entity()->img_file('icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
+                    <div class="alert-icone"><img src="<?= $this->get_file("img", 'icons/bx-info-circle.svg') ?>" width="20" alt=""> &nbsp; <strong>Information !</strong>
                     </div>
                 <?php endif; ?>
                 <?php if (is_array($_SESSION['notification']['message'])): ?>
@@ -443,7 +437,7 @@ class Entity
         } else {
             echo '
                 <li class="nav-item active">
-                    <a class="nav-link" href="' . $this->entity()->url() . '">Accueil</a>
+                    <a class="nav-link" href="' . $this->url() . '">Accueil</a>
                 </li>
             ';
         }
@@ -492,7 +486,7 @@ class Entity
     {
         list($fileName, $extension) = explode('.', $file);
         $files = 'files/file-' . $extension;
-        return '<img src="' . $this->img_file($files) . '" width="80px">';
+        return '<img src="' . $this->get_file("vendor",$files) . '" width="80px">';
     }
 
 

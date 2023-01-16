@@ -32,19 +32,19 @@
                             <a href="<?= $data->admins('users/edit/'.$data->users_id); ?>"
                                class="btn btn-default btn-sm" data-toggle="tooltip"
                                title="Desactiver">
-                                <img src="<?= $this->entity()->img_file('icons/bx-x.svg') ?>" class="is-light" width="15" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-x.svg') ?>" class="is-light" width="15" alt="">
                             </a>
                         <?php elseif($data->state == 0 ): ?>
                             <a href="<?= $data->admins('users/edit/'.$data->users_id); ?>"
                                class="btn btn-default btn-sm" data-toggle="tooltip"
                                title="Activer">
-                                <img src="<?= $this->entity()->img_file('icons/bx-check.svg') ?>" class="is-light" width="15" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-check.svg') ?>" class="is-light" width="15" alt="">
                             </a>
                         <?php endif; ?>
                         <a href="<?= $data->admins('users/delete/'.$data->users_id); ?>"
                            class="btn btn-danger btn-sm" data-toggle="tooltip"
                            title="Supprimer">
-                            <img src="<?= $this->entity()->img_file('icons/bx-trash.svg') ?>" class="is-light" width="15" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bx-trash.svg') ?>" class="is-light" width="15" alt="">
                         </a>
                     </div>
                 </td>

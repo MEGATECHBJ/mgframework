@@ -1,7 +1,7 @@
 <div class="row no-gutters"></div>
 <!-- Bouton retour en haut -->
 <a href="#0" class="is-scroll opacity">
-    <img src="<?= $this->entity()->img_file('icons/bx-up-arrow-alt.svg') ?>" width="10" alt="">
+    <img src="<?= $this->entity()->get_file("vendor",'icons/bx-up-arrow-alt.svg') ?>" width="10" alt="">
 </a>
 
 <!-- Cookies -->
@@ -28,32 +28,32 @@
                 <div class="social-area">
                     <?php if($this->entity()->social_url('youtube') != ''): ?>
                         <a href="<?= $this->entity()->social_url('youtube'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-youtube.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-youtube.svg') ?>" class="footer-icons" alt="">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($this->entity()->social_url('facebook') != ''): ?>
                         <a href="<?= $this->entity()->social_url('facebook'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-facebook.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-facebook.svg') ?>" class="footer-icons" alt="">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($this->entity()->social_url('twitter') != ''): ?>
                         <a href="<?= $this->entity()->social_url('twitter'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-twitter.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-twitter.svg') ?>" class="footer-icons" alt="">
                         </a>&nbsp;
                     <?php endif; ?>
                     <?php if($this->entity()->social_url('instagram') != ''): ?>
                         <a href="<?= $this->entity()->social_url('instagram'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-instagram.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-instagram.svg') ?>" class="footer-icons" alt="">
                         </a>
                     <?php endif; ?>&nbsp;
                     <?php if($this->entity()->social_url('flickr') != ''): ?>
                         <a href="<?= $this->entity()->social_url('flickr'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-flickr.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-flickr.svg') ?>" class="footer-icons" alt="">
                         </a>
                     <?php endif; ?>&nbsp;
                     <?php if($this->entity()->social_url('telegram') != ''): ?>
                         <a href="<?= $this->entity()->social_url('telegram'); ?>" target="_blank">
-                            <img src="<?= $this->entity()->img_file('icons/bxl-telegram.svg') ?>" class="footer-icons" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-telegram.svg') ?>" class="footer-icons" alt="">
                         </a>
                     <?php endif; ?>&nbsp;
                 </div>
@@ -70,7 +70,7 @@
                 <span class="is-soulignement is-soulignement-red"></span>
                 <div class="row no-margin mb-1">
                     <div class="col-md-2">
-                        <img src="<?= $this->entity()->img_file('icons/bx-home-alt-2.svg') ?>" width="20" class="footer-icons" alt="">
+                        <img src="<?= $this->entity()->get_file("vendor",'icons/bx-home-alt-2.svg') ?>" width="20" class="footer-icons" alt="">
                     </div>
                     <div class="col-md-10 is-indication">
                         <?= $this->entity()->app_info('company_address'); ?>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="row no-margin mb-1">
                     <div class="col-md-2">
-                        <img src="<?= $this->entity()->img_file('icons/bx-envelope.svg') ?>" width="20" class="footer-icons" alt="">
+                        <img src="<?= $this->entity()->get_file("vendor",'icons/bx-envelope.svg') ?>" width="20" class="footer-icons" alt="">
                     </div>
                     <div class="col-md-10 is-indication">
                         <?= $this->entity()->app_info('company_email'); ?>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="row no-margin mb-1">
                     <div class="col-md-2">
-                        <img src="<?= $this->entity()->img_file('icons/bx-phone.svg') ?>" width="20" class="footer-icons" alt="">
+                        <img src="<?= $this->entity()->get_file("vendor",'icons/bx-phone.svg') ?>" width="20" class="footer-icons" alt="">
                     </div>
                     <div class="col-md-10 is-indication">
                         <?= $this->entity()->app_info('company_first_phone') ?> <br>

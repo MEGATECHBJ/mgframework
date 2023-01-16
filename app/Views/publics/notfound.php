@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row text-center py-5">
         <div class="col-md-6 offset-md-3 py-5">
-            <img src="<?= $this->entity()->img_file('icons/bx-cog.svg') ?>" width="120" alt=""><br><br>
+            <img src="<?= $this->entity()->get_file("vendor",'icons/bx-cog.svg') ?>" width="120" alt=""><br><br>
             <h1>Oups... </h1>
             <h3>La page que vous cherchez n'a pu être trouvée</h3>
             <h5>Veuillez vérifier le lien et réessayer<br>

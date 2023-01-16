@@ -108,13 +108,13 @@ class App
             <div class="alert alert-<?= $type; ?>">
                 <?php
                 if ($type === 'success') {
-                    $titre = '<img src="'. $this->entity()->img_file('icons/bx-check.svg') .'" width="20" alt=""> Succès !';
+                    $titre = '<img src="'. $this->entity()->get_file("vendor",'icons/bx-check.svg') .'" width="20" alt=""> Succès !';
                 } else if ($type === 'danger') {
-                    $titre = '<img src="'. $this->entity()->img_file('icons/bx-x.svg') .'" width="20" alt=""> Erreur(s) !';
+                    $titre = '<img src="'. $this->entity()->get_file("vendor",'icons/bx-x.svg') .'" width="20" alt=""> Erreur(s) !';
                 } else if ($type === 'warning') {
-                    $titre = '<img src="'. $this->entity()->img_file('icons/bx-alarm-exclamation.svg') .'" width="20" alt=""> Attention !';
+                    $titre = '<img src="'. $this->entity()->get_file("vendor",'icons/bx-alarm-exclamation.svg') .'" width="20" alt=""> Attention !';
                 } else if ($type === 'info') {
-                    $titre = '<img src="'. $this->entity()->img_file('icons/bx-info-circle.svg') .'" width="20" alt=""> Information !';
+                    $titre = '<img src="'. $this->entity()->get_file("vendor",'icons/bx-info-circle.svg') .'" width="20" alt=""> Information !';
                 } else {
                     $titre = null;
                 }

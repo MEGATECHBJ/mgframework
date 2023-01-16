@@ -4,10 +4,10 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                     data-target="#navbarText" aria-controls="navbarText" aria-expanded="false"
                     aria-label="Toggle navigation">
-                <img src="<?= $this->entity()->img_file('icons/bx-menu.svg') ?>" alt="">
+                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-menu.svg') ?>" alt="">
             </button>
             <a class="navbar-brand" href="<?= $this->entity()->url(); ?>">
-                <img src="<?= $this->entity()->img_file('logo.png'); ?>" alt="<?= $this->entity()->app_info('app_name'); ?>"
+                <img src="<?= $this->entity()->get_file("vendor",'logo.png'); ?>" alt="<?= $this->entity()->app_info('app_name'); ?>"
                      title="<?= $this->entity()->app_info('app_name'); ?>" width="65">
             </a>
             <div class="collapse navbar-collapse" id="navbarText">

@@ -214,7 +214,7 @@ class Table
             $sql_part = implode(' AND ', $sql_parts);
 
             if ($id) {
-                $sql_part = $sql_part . ' AND ' . $id . ' != ?';
+                $sql_part = $sql_part . ' AND id != ?';
                 $attribute[] = $id;
                 $query = $this->MyQuery("SELECT * FROM {$this->table} WHERE $sql_part ", $attribute);
             } else {

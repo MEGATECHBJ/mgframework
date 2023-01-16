@@ -11,7 +11,7 @@
         } ?>
         <form method="post" action="">
             <div class="sign-avatar">
-                <img src="<?= $this->entity()->img_file('avatar-sign.png'); ?>" width="75" alt="<?= App\App::getInstance()->app_info('app_name'); ?>">
+                <img src="<?= $this->entity()->get_file("vendor",'avatar-sign.png'); ?>" width="75" alt="<?= App\App::getInstance()->app_info('app_name'); ?>">
             </div>
             <p class="sign-title">Inscription</p>
             <?= $form->input('name', null, 'Votre nom et Prenom', ['required' => 'required']) ?>

@@ -1,6 +1,8 @@
 <div class="a-sidebar">
     <div class="a-branding">
-        <img src="<?= $entity->img_file('logo.png') ?>" title="<?= $entity->app_info('app_name') ?>" class="a-brand-img">
+        <a target="_blank" href="<?= $this->entity()->get_url() ?>">
+            <img src="<?= $entity->get_file("img", 'logo.png') ?>" title="<?= $entity->app_info('app_name') ?>" class="a-brand-img">
+        </a>
         <h1 class="a-brand-name"><?= $entity->app_info('app_name') ?></h1>
     </div>
     <div class="a-sidebar-content">

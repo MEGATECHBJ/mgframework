@@ -7,7 +7,7 @@
                     <hr>
                     <p>
                         <strong>
-                            <img src="<?= $this->entity()->img_file('icons/bx-phone.svg') ?>" alt="">
+                            <img src="<?= $this->entity()->get_file("vendor",'icons/bx-phone.svg') ?>" alt="">
                         </strong>  &nbsp;&nbsp;&nbsp;<?= $this->entity()->app_info('company_first_phone') ?>
                         <?php if($this->entity()->app_info('company_second_phone') != ''): ?>
                             / <?= $this->entity()->app_info('company_second_phone') ?>
@@ -15,30 +15,30 @@
                     </p>
                     <?php if($this->entity()->app_info('company_whatsapp') != ''): ?>
                         <p><strong>
-                                <img src="<?= $this->entity()->img_file('icons/bxl-whatsapp.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-whatsapp.svg') ?>" alt="">
                             </strong> &nbsp;&nbsp;&nbsp;(+229) <?= $this->entity()->app_info('company_whatsapp') ?> </p>
                     <?php endif; ?>
 
                     <?php if($this->entity()->app_info('company_email') != ''): ?>
                         <p><strong>
-                                <img src="<?= $this->entity()->img_file('icons/bx-envelope.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-envelope.svg') ?>" alt="">
                             </strong>  &nbsp;&nbsp;&nbsp;<?= $this->entity()->app_info('company_email') ?> </p>
                     <?php endif; ?>
 
                     <?php if($this->entity()->app_info('company_bp') != ''): ?>
                         <p><strong>
-                                <img src="<?= $this->entity()->img_file('icons/bx-book.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-book.svg') ?>" alt="">
                             </strong>  &nbsp;&nbsp;&nbsp;<?= $this->entity()->app_info('company_bp') ?> </p>
                     <?php endif; ?>
 
                     <?php if($this->entity()->app_info('company_address') != ''): ?>
                         <p><strong>
-                                <img src="<?= $this->entity()->img_file('icons/bx-map-pin.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bx-map-pin.svg') ?>" alt="">
                                 </strong>  &nbsp;&nbsp;&nbsp;<?= $this->entity()->app_info('company_address') ?> </p>
                     <?php endif; ?>
                     <hr>
                     <div class="text-center mt-3">
-                        <img src="<?= $this->entity()->img_file('logo.png'); ?>" class="img-fluid w-50" >
+                        <img src="<?= $this->entity()->get_file("vendor",'logo.png'); ?>" class="img-fluid w-50" >
                     </div>
 
 
@@ -88,27 +88,27 @@
                     <div class="contact-social-area d-flex justify-content-between align-items-center">
                         <?php if($this->entity()->social_url('facebook') != ''): ?>
                             <a href="<?= $this->entity()->social_url('facebook'); ?>" target="_blank" >
-                                <img src="<?= $this->entity()->img_file('icons/bxl-facebook.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-facebook.svg') ?>" alt="">
                             </a>
                         <?php endif; ?>
                         <?php if($this->entity()->social_url('youtube') != ''): ?>
                             <a href="<?= $this->entity()->social_url('youtube'); ?>" target="_blank">
-                                <img src="<?= $this->entity()->img_file('icons/bxl-youtube.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-youtube.svg') ?>" alt="">
                             </a>
                         <?php endif; ?>
                         <?php if($this->entity()->social_url('twitter') != ''): ?>
                             <a href="<?= $this->entity()->social_url('twitter'); ?>" target="_blank">
-                                <img src="<?= $this->entity()->img_file('icons/bxl-twitter.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-twitter.svg') ?>" alt="">
                             </a>
                         <?php endif; ?>
                         <?php if($this->entity()->social_url('flickr') != ''): ?>
                             <a href="<?= $this->entity()->social_url('flickr'); ?>" target="_blank">
-                                <img src="<?= $this->entity()->img_file('icons/bxl-flickr.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-flickr.svg') ?>" alt="">
                             </a>
                         <?php endif; ?>
                         <?php if($this->entity()->social_url('instagram') != ''): ?>
                             <a href="<?= $this->entity()->social_url('instagram'); ?>" target="_blank">
-                                <img src="<?= $this->entity()->img_file('icons/bxl-instagram.svg') ?>" alt="">
+                                <img src="<?= $this->entity()->get_file("vendor",'icons/bxl-instagram.svg') ?>" alt="">
                             </a>
                         <?php endif; ?>&nbsp;
                     </div>
